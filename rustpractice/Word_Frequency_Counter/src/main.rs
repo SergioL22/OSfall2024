@@ -1,22 +1,28 @@
-fn find_most_frequent_word(text: &str, result_word: &mut String, result_count: &mut usize) {
+fn most_frequent_word(text: &str) -> (String, usize) {
     let words: Vec<&str> = text.split_whitespace().collect();
-    
-    for word in &words {
-        let count = words.iter().filter(|&&w| w == *word).count(); 
-        if count > *result_count {
-            *result_count = count;
-            *result_word = word.to_string();
+    let mut max_word = String::new();
+    let mut max_count = 0;
+
+    for i in 0..words.len() {
+        let mut count = 1; // Start with count 1 for the current word
+        for j in i+1..words.len() {
+            if words[i] == words[j] {
+                count += 1;
+            }
+        }
+
+        // Update the max_word and max_count if the current word has a higher count
+        if count > max_count {
+            max_word = words[i].to_string();
+            max_count = count;
         }
     }
+
+    (max_word, max_count) // return tuple
 }
 
 fn main() {
-    let input_text = "the quick brown fox jumps over the lazy dog the quick brown fox";
-    
-    let mut most_frequent_word = String::new();
-    let mut highest_count = 0;
-
-    find_most_frequent_word(input_text, &mut most_frequent_word, &mut highest_count);
-
-    println!("Most frequent word: '{}', Count: {}", most_frequent_word, highest_count);
+    let text = "the quick brown fox jumps over the lazy dog the quick brown fox";
+    let (word, count) = most_frequent_word(text);
+    println!("Most frequent word: \"{}\" ({} times)", word, count);
 }
