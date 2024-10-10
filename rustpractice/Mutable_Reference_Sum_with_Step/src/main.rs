@@ -1,6 +1,6 @@
 fn sum_with_step(total: &mut i32, low: i32, high: i32, step: i32) {
    
-    *total = 0; // Reset the total to 0
+    *total = 0;
     let mut current = low;
 
     while current <= high {
